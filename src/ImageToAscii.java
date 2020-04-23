@@ -68,7 +68,7 @@ public class ImageToAscii {
       System.out.println("");
     }
   }
-  
+
   // ----------Methods to get luminance from RGB----------
   private double rgbToLuminance(Color pixel) {
     double luminance;
@@ -102,9 +102,9 @@ public class ImageToAscii {
   // ----------Methods to get luminance from RGB----------
 
   public static void main(String[] args) {
-    ImageToAscii test = new ImageToAscii();
-    test.loadImage("images/test.jpg");
-    test.printImageDimensions();
-
+    ImageToAscii app = new ImageToAscii();
+    app.loadImage("images/test.jpg");
+    app.printImageDimensions();
+    app.printAsciiImage();
   }
 }
