@@ -2,10 +2,13 @@
 Converts an image into ascii characters and outputs it to the command line 
 
 **Original**
+<img src = 'readMeImages/1.jpg'>
 
 **VScode terminal**
+<img src = 'readMeImages/2.png'>
 
 **Windows PowerShell**
+<img src = 'readMeImages/3.png'>
 
 
 ## Usage
