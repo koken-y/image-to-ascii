@@ -32,6 +32,38 @@ public class ImageToAscii {
     System.out.println("Image Size: " + width + " x " + height);
   }
 
+  // ----------Methods to get luminance from RGB----------
+  private double rgbToLuminance(Color pixel) {
+    double luminance;
+    double vR = (double) pixel.getRed() / 255;
+    double vG = (double) pixel.getGreen() / 255;
+    double vB = (double) pixel.getBlue() / 255;
+
+    luminance = 0.2126 * srgbToLin(vR) + 0.7152 * srgbToLin(vG) + 0.0722 * srgbToLin(vB);
+    return luminance;
+  }
+
+  private double srgbToLin(double colorChannel) {
+    if (colorChannel <= 0.04045) {
+      return colorChannel / 12.92;
+    } else {
+      return Math.pow(((colorChannel + 0.055) / 1.055), 2.4);
+    }
+  }
+
+  private double luminanceToLightness(double luminance) {
+    double lightness;
+    if (luminance <= (double) 216 / 24389) { // The CIE standard states 0.008856 but 216/24389 is the intent for
+                                             // 0.008856451679036
+      lightness = luminance * ((double) 24389 / 27); // The CIE standard states 903.3, but 24389/27 is the intent,
+                                                     // making 903.296296296296296
+    } else {
+      lightness = (Math.pow(luminance, ((double) 1 / 3)) * 116 - 16);
+    }
+    return lightness / 100;
+  }
+  // ----------Methods to get luminance from RGB----------
+  
   public static void main(String[] args) {
     ImageToAscii test = new ImageToAscii();
     test.loadImage("images/test.jpg");
