@@ -32,6 +32,43 @@ public class ImageToAscii {
     System.out.println("Image Size: " + width + " x " + height);
   }
 
+  public char[][] getAsciiMatrix() {
+    int width = bimg.getWidth();
+    int height = bimg.getHeight();
+    char[][] asciiMatrix = new char[width][height];
+    Color pixel;
+    double brightness;
+    char ascii;
+
+    for (int w = 0; w < width; w++) {
+      for (int h = 0; h < height; h++) {
+        pixel = new Color(bimg.getRGB(w, h));
+        brightness = rgbToLuminance(pixel);
+        ascii = getAsciiFromBrightness(luminanceToLightness(brightness));
+
+        asciiMatrix[w][h] = ascii;
+      }
+    }
+    return asciiMatrix;
+  }
+
+  private char getAsciiFromBrightness(double brightness) {
+    int asciiIndex = (int) Math.round(brightness * 10);
+    return SIMPLE_ASCII.charAt(asciiIndex);
+  }
+
+  public void printAsciiImage() {
+    char[][] asciiMatrix = getAsciiMatrix();
+
+    for (int h = 0; h < asciiMatrix[0].length; h++) {
+      for (int w = 0; w < asciiMatrix.length; w++) {
+        char letter = asciiMatrix[w][h];
+        System.out.print(letter + "" + letter + letter);
+      }
+      System.out.println("");
+    }
+  }
+  
   // ----------Methods to get luminance from RGB----------
   private double rgbToLuminance(Color pixel) {
     double luminance;
@@ -63,7 +100,7 @@ public class ImageToAscii {
     return lightness / 100;
   }
   // ----------Methods to get luminance from RGB----------
-  
+
   public static void main(String[] args) {
     ImageToAscii test = new ImageToAscii();
     test.loadImage("images/test.jpg");
