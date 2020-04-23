@@ -19,7 +19,7 @@ public class ImageToAscii {
   public void loadImage(String imagePath) {
     try {
       bimg = ImageIO.read(new File(imagePath));
-      bimg = Thumbnails.of(bimg).size(bimg.getWidth() / 4, bimg.getHeight() / 4).asBufferedImage();
+      bimg = Thumbnails.of(bimg).size(bimg.getWidth() / 8, bimg.getHeight() / 8).asBufferedImage();
       System.out.println("Succesfully loaded image!");
     } catch (IOException e) {
       e.printStackTrace();
@@ -59,13 +59,17 @@ public class ImageToAscii {
 
   public void printAsciiImage() {
     char[][] asciiMatrix = getAsciiMatrix();
+    StringBuilder line = new StringBuilder();
 
     for (int h = 0; h < asciiMatrix[0].length; h++) {
       for (int w = 0; w < asciiMatrix.length; w++) {
         char letter = asciiMatrix[w][h];
-        System.out.print(letter + "" + letter + letter);
+        for (int i = 0; i < 3; i++) {
+          line.append(letter);
+        }
       }
-      System.out.println("");
+      System.out.println(line);
+      line.setLength(0);
     }
   }
 
@@ -103,7 +107,7 @@ public class ImageToAscii {
 
   public static void main(String[] args) {
     ImageToAscii app = new ImageToAscii();
-    app.loadImage("images/test.jpg");
+    app.loadImage("../images/test.jpg");
     app.printImageDimensions();
     app.printAsciiImage();
   }
